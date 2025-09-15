@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCM Security - Account Verification</title>
+    <style>
+        :root {
+            --primary: #000000;
+            --accent: #E50914;
+            --light: #f5f5f5;
+            --dark: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            animation: slideUp 0.6s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: var(--primary);
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #c40812;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--light);
+            border-top: 1px solid #eee;
+        }
+        
+        .footer p {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        /* Mocking section */
+        .mock-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: var(--primary);
+            color: white;
+        }
+        
+        .mock-container h2 {
+            color: var(--accent);
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .mock-text {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .hacker-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: laugh 1s infinite;
+        }
+        
+        @keyframes laugh {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+        
+        .credentials {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <div class="header">
+            <div class="logo">TCM</div>
+            <h1>Account Verification Required</h1>
+            <p>Secure your TCM Security account</p>
+        </div>
+        
+        <div class="content">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="btn">Verify Account</button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 TCM Security. All rights reserved.</p>
+        </div>
+    </div>
+
+    <div class="mock-container" id="mockContainer">
+        <div class="hacker-icon">🤡</div>
+        <h2>GOTCHA!</h2>
+        <p class="mock-text">
+            Seriously? You actually fell for this?<br>
+            In 2024? A "security verification" email?<br>
+            You're supposed to be learning about pentesting?<br>
+            Maybe start with "How to Not Get Phished 101" 😂
+        </p>
+        
+        <div class="credentials">
+            <strong>We just captured:</strong><br>
+            Email: <span id="capturedEmail"></span><br>
+            Password: <span id="capturedPassword"></span>
+        </div>
+        
+        <p class="mock-text">
+            Don't worry, we're not actually saving your data...<br>
+            But someone else might next time!<br>
+            Consider this a free lesson in operational security.
+        </p>
+        
+        <div class="hacker-icon">💀</div>
+        <p style="color: #ccc; font-size: 14px; margin-top: 20px;">
+            Now go enable 2FA and stop clicking suspicious links!
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Show the mocking page
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('mockContainer').style.display = 'block';
+            
+            // Display the captured credentials
+            document.getElementById('capturedEmail').textContent = email;
+            document.getElementById('capturedPassword').textContent = password;
+            
+            // You could also send these to a server here
+            console.log('Captured credentials:', { email, password });
+            
+            // Add some mocking sound effects (optional)
+            const laugh = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrLp66VTFAsymNvzxHUpBSBxw/DfkD8IEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ00ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6OynVhUNLpTb88R1KQUcccPw35BACBBYr+jsp1YVDS6U2/PEdSkFHHHD8N+QQAgQWK/o7KdWFQ0ulNvzxHUpBRxxw/DfkEAIEFiv6Oyn极好！');
+            laugh.play().catch(() => {});
+        });
+    </script>
+</body>
+</html>
